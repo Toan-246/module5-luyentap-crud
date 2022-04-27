@@ -1,0 +1,23 @@
+<button (click)="changeStateCreate()">Show create form</button>
+<h1>Danh sách sản phẩm</h1>
+<table>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  <tr *ngFor="let product of products">
+    <td>{{product.id}}</td>
+    <td>{{product.name}}</td>
+    <td>{{product.price}}</td>
+    <td>{{product.description}}</td>
+    <td><button (click)="changeStateEdit(product)">Edit</button></td>
+    <td><button (click)="changeStateDelete(product)">Delete</button></td>
+  </tr>
+</table>
+<app-product-cretate *ngIf="isShowCreateForm" (evenCreate) = "createProduct ($event)"></app-product-cretate>
+<app-product-edit *ngIf="isShowEditForm" [product]="currentProduct" (editEvent) = "editProduct($event)"></app-product-edit>
+<app-product-delete *ngIf="isShowDeleteForm" [product] = "currentProduct" (deleteEven) = "deleteProduct($event)"></app-product-delete>
