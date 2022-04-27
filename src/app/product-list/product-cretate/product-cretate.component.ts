@@ -16,7 +16,12 @@ export class ProductCretateComponent implements OnInit {
   }
 
   createProduct(productForm) {
-    this.evenCreate.emit(this.product)
-    console.log(productForm.value())
+    if (productForm.valid){
+      this.evenCreate.emit(this.product)
+      console.log(productForm.value)
+    }
+    else {
+      alert('xay ra loi')
+    }
   }
 }
