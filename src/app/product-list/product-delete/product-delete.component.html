@@ -2,19 +2,19 @@
 <form (ngSubmit)="deleteProduct()">
   <div>
     <label for="id">Id:</label>
-    <input type="number" id="id" name="id" [(ngModel)]="product.id">
+    <input type="number" id="id" name="id" required [(ngModel)]="product.id">
   </div>
   <div>
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" [(ngModel)]="product.name">
+    <input type="text" id="name" name="name" required minlength="6" maxlength="15" [(ngModel)]="product.name">
   </div>
   <div>
     <label for="price">Price:</label>
-    <input type="text" id="price" name="price" [(ngModel)]="product.price">
+    <input type="text" id="price" name="price" required [(ngModel)]="product.price">
   </div>
   <div>
     <label for="description">Description:</label>
-    <input type="text" id="description" name="description" [(ngModel)]="product.description">
+    <input type="text" id="description" name="description" required [(ngModel)]="product.description">
   </div>
   <button>Delete</button>
 </form>
