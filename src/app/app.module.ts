@@ -3,17 +3,17 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductCretateComponent } from './product-list/product-cretate/product-cretate.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { ProductCreateComponent } from './product/product-cretate/product-create.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { ProductEditComponent } from './product-list/product-edit/product-edit.component';
-import { ProductDeleteComponent } from './product-list/product-delete/product-delete.component';
+import { ProductEditComponent } from './product/product-edit/product-edit.component';
+import { ProductDeleteComponent } from './product/product-delete/product-delete.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductCretateComponent,
+    ProductCreateComponent,
     ProductEditComponent,
     ProductDeleteComponent
   ],

@@ -1,0 +1,20 @@
+<h1>Danh sách sản phẩm</h1>
+<a routerLink="/products/create">Tạo mới</a>
+<table>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  <tr *ngFor="let product of products">
+    <td>{{product.id}}</td>
+    <td>{{product.name}}</td>
+    <td>{{product.price}}</td>
+    <td>{{product.description}}</td>
+    <td><button>Edit</button></td>
+    <td><button>Delete</button></td>
+  </tr>
+</table>
