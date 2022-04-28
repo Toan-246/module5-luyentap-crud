@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Product} from '../../model/product';
+import {ProductService} from '../../service/product.service';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-delete',
@@ -7,14 +9,20 @@ import {Product} from '../../model/product';
   styleUrls: ['./product-delete.component.css']
 })
 export class ProductDeleteComponent implements OnInit {
-  @Input()
   product: Product = {};
-  @Output()
-  deleteEven = new EventEmitter<Product>();
 
-  constructor() {
+  constructor(private productService: ProductService,
+              private router:Router,
+              private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.paramMap.subscribe((paraMap: ParamMap) =>{
+      const id = paraMap.get('id');
+      this.getProductById(id);
+    })
   }
+  getProductById(id) {
+    this.product = this.productService.getProductById(id)
 
+  }
   ngOnInit() {
   }
 
@@ -23,6 +31,9 @@ export class ProductDeleteComponent implements OnInit {
   }
 
   deleteProduct() {
-    this.deleteEven.emit(this.product);
+    this.productService.deleteProduct(this.product.id)
+    this.router.navigateByUrl('/products')
   }
+
+
 }

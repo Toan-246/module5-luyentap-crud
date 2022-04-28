@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Product} from '../../model/product';
 import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ProductService} from '../../service/product.service';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-edit',
@@ -8,10 +10,7 @@ import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./product-edit.component.css']
 })
 export class ProductEditComponent implements OnInit {
-  @Input()
   product: Product = {};
-  @Output()
-  editEvent = new EventEmitter<Product>();
 
   productForm: FormGroup = new FormGroup({
     id: new FormControl('', Validators.required),
@@ -20,7 +19,16 @@ export class ProductEditComponent implements OnInit {
     description: new FormControl('', Validators.required)
   });
 
-  constructor() {
+  constructor(private productService: ProductService,
+              private router:Router,
+              private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.paramMap.subscribe((paraMap: ParamMap) =>{
+      const id = paraMap.get('id');
+      this.getProductById(id);
+    })
+  }
+  getProductById (id){
+    this.product =  this.productService.getProductById(id);
   }
   get idControl (){
     return this.productForm.get('id')
@@ -42,6 +50,7 @@ export class ProductEditComponent implements OnInit {
   }
 
   editProduct() {
-    this.editEvent.emit(this.productForm.value);
+    this.productService.editProduct(this.product.id, this.productForm.value)
+    this.router.navigateByUrl('/products')
   }
 }
