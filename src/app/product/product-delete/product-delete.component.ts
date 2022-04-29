@@ -20,7 +20,9 @@ export class ProductDeleteComponent implements OnInit {
     })
   }
   getProductById(id) {
-    this.product = this.productService.getProductById(id)
+    this.productService.getProductById(id).subscribe(productBE => {
+      this.product = productBE;
+    })
 
   }
   ngOnInit() {

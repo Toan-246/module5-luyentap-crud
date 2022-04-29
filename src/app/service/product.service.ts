@@ -1,63 +1,34 @@
 import {Injectable} from '@angular/core';
 import {Product} from '../model/product';
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+
+const API_URL = `${environment.apiUrl}`
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  products: Product [] = [
-    {
-      id: 1,
-      name: 'Iphone 12',
-      price: 12000,
-      description: 'New'
-    },
-    {
-      id: 2,
-      name: 'Iphone 13',
-      price: 15000,
-      description: 'New'
-    },
-    {
-      id: 3,
-      name: 'Iphone 13 Promax',
-      price: 200000,
-      description: 'New'
-    }
-  ];
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
-  getAll (){
-    return this.products;
+  getAll (): Observable<Product[]>{
+    return this.http.get<Product[]>(`${API_URL}/products`);
   }
 
-  getProductById (id){
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id == id){
-        return this.products[i];
-      }
-    }
+  getProductById (id) : Observable<Product>{
+    return this.http.get<Product>(`${API_URL}/products/${id}`)
   }
-  createProduct (product){
-    this.products.push(product)
+  createProduct (product): Observable<Product>{
+    return this.http.post(`${API_URL}/products` , product);
   }
 
-  editProduct (id, product){
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id == id){
-        this.products[i] = product
-      }
-    }
-    return null;
+  editProduct (id, product): Observable<Product>{
+    return this.http.put(`${API_URL}/products/${id}`, product)
   }
-  deleteProduct (id){
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id == id){
-        this.products.splice(i, 1)
-        return;
-      }
-    }
+  deleteProduct (id): Observable<Product>{
+    return  this.http.delete(`${API_URL}/products/${id}`)
   }
 }

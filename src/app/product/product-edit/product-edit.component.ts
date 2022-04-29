@@ -28,7 +28,13 @@ export class ProductEditComponent implements OnInit {
     })
   }
   getProductById (id){
-    this.product =  this.productService.getProductById(id);
+    this.productService.getProductById(id).subscribe(productBE => {
+      this.product = productBE;
+      this.idControl.setValue(this.product.id);
+      this.nameControl.setValue(this.product.name);
+      this.priceControl.setValue(this.product.price);
+      this.descriptionControl.setValue(this.product.description);
+    });
   }
   get idControl (){
     return this.productForm.get('id')
@@ -43,14 +49,15 @@ export class ProductEditComponent implements OnInit {
     return this.productForm.get('description');
   }
   ngOnInit() {
-    this.idControl.setValue(this.product.id);
-    this.nameControl.setValue(this.product.name);
-    this.priceControl.setValue(this.product.price);
-    this.descriptionControl.setValue(this.product.description);
+
   }
 
-  editProduct() {
-    this.productService.editProduct(this.product.id, this.productForm.value)
+  editProduct(productForm) {
+    this.productService.editProduct(this.product.id, productForm.value).subscribe(() =>{
+      alert('Cập nhật thành công')
+    }, error => {
+      console.log(error);
+    })
     this.router.navigateByUrl('/products')
   }
 }

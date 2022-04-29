@@ -21,8 +21,12 @@ export class ProductCreateComponent implements OnInit {
 
   createProduct(productForm) {
     if (productForm.valid) {
-      this.productService.createProduct(productForm.value);
-      this.router.navigateByUrl('/products')
+      this.productService.createProduct(productForm.value).subscribe(() =>{
+        alert('Tạo mới thành công')
+      }, error => {
+        console.log(error)
+      });
+      this.router.navigateByUrl('/products');
     } else {
       alert('xay ra loi');
     }
